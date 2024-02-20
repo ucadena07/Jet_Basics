@@ -38,7 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.basics.ui.theme.BasicsTheme
-
+import com.example.basics.ui.theme.lightGreen
 
 
 class MainActivity : ComponentActivity() {
@@ -71,7 +71,8 @@ fun ProfileCard(){
             .wrapContentHeight(align = Alignment.Top)
             .padding(16.dp)
         ,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -85,9 +86,10 @@ fun ProfileCard(){
 fun ProfilePicture(){
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 2.dp,color = Color.Green),
+        border = BorderStroke(width = 2.dp,color = MaterialTheme.colorScheme.lightGreen.copy(.8f)),
         modifier = Modifier.padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+
     ) {
         Image(
             painter = painterResource(id = R.drawable.user1),
@@ -100,7 +102,9 @@ fun ProfilePicture(){
 }
 @Composable
 fun ProfileContent(){
-    Column(modifier = Modifier.padding(8.dp).fillMaxWidth()) {
+    Column(modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth()) {
         Text(text = "John Doe", style = MaterialTheme.typography.headlineSmall)
         Text(
             text = "Active Now",
