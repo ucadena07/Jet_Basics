@@ -40,6 +40,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -108,13 +109,13 @@ fun ProfileCard(userProfile: UserProfile){
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start) {
-            ProfilePicture(userProfile.drawableId,userProfile.status)
+            ProfilePicture(userProfile.pictureUrl,userProfile.status)
             ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 @Composable
-fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
+fun ProfilePicture(imageUrl: String, onlineStatus: Boolean){
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -129,14 +130,12 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
 
     ) {
         
-        Image(
-            painter = rememberAsyncImagePainter(
-                drawableId,
-
-            ),
+        AsyncImage(
+            model = imageUrl,
             contentDescription = "image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(72.dp),
+
+            modifier = Modifier.clip(CircleShape).size(72.dp)
 
         )
     }
