@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -44,6 +46,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.example.basics.model.UserProfile
 import com.example.basics.model.userProfileList
 import com.example.basics.ui.theme.BasicsTheme
@@ -70,12 +74,11 @@ fun MainScreen() {
                 .fillMaxSize()
                 .padding(it)
         ) {
-            Column {
-                for (user in userProfileList){
-                    ProfileCard(user)
+            LazyColumn{
+                items(userProfileList){userProfile ->
+                    ProfileCard(userProfile = userProfile)
                 }
             }
-
         }
     }
 
@@ -125,11 +128,16 @@ fun ProfilePicture(drawableId: Int, onlineStatus: Boolean){
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
 
     ) {
+        
         Image(
-            painter = painterResource(id = drawableId),
+            painter = rememberAsyncImagePainter(
+                drawableId,
+
+            ),
             contentDescription = "image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(72.dp)
+            modifier = Modifier.size(72.dp),
+
         )
     }
 
