@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -85,6 +86,27 @@ fun MainScreen() {
 
 }
 
+@Composable
+fun UserProfileScreen() {
+    Scaffold(topBar = {AppBar()}) {
+        Surface(
+            color = Color.LightGray,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
+            val user = userProfileList[0]
+            Column(modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top) {
+                ProfilePicture(user.pictureUrl,user.status,240.dp)
+                ProfileContent(user.name, user.status,Alignment.CenterHorizontally)
+            }
+        }
+    }
+
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(){
@@ -115,7 +137,7 @@ fun ProfileCard(userProfile: UserProfile){
     }
 }
 @Composable
-fun ProfilePicture(imageUrl: String, onlineStatus: Boolean){
+fun ProfilePicture(imageUrl: String, onlineStatus: Boolean, imageSize: Dp = 72.dp){
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -135,17 +157,20 @@ fun ProfilePicture(imageUrl: String, onlineStatus: Boolean){
             contentDescription = "image",
             contentScale = ContentScale.Crop,
 
-            modifier = Modifier.clip(CircleShape).size(72.dp)
+            modifier = Modifier
+                .clip(CircleShape)
+                .size(imageSize)
 
         )
     }
 
 }
 @Composable
-fun ProfileContent(name: String, onlineStatus: Boolean){
+fun ProfileContent(name: String, onlineStatus: Boolean, alignment: Alignment.Horizontal = Alignment.Start){
     Column(modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth()) {
+        .padding(8.dp),
+        horizontalAlignment = alignment
+        ) {
         Text(text = name, style = MaterialTheme.typography.headlineSmall)
         Text(
             text = if(onlineStatus) "Active Now" else "Offline",
@@ -155,7 +180,7 @@ fun ProfileContent(name: String, onlineStatus: Boolean){
 
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
     BasicsTheme {
@@ -163,4 +188,14 @@ fun MainScreenPreview() {
     }
 
 }
+
+@Preview(showBackground = true)
+@Composable
+fun UserProfilePreview() {
+    BasicsTheme {
+        UserProfileScreen()
+    }
+
+}
+
 
