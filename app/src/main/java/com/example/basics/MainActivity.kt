@@ -73,6 +73,7 @@ fun MainScreen(navController: NavHostController) {
                 items(userProfileList){userProfile ->
                     ProfileCard(userProfile = userProfile){
                         navController.navigate("user_details/${userProfile.id}")
+                        //navController.navigateUp()
                     }
                 }
             }
